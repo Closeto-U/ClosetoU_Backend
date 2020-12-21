@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.closetoU.domain.Member;
+import spring.project.closetoU.exception.NoSearchEntityException;
 import spring.project.closetoU.repository.MemberRepository;
 
 import java.util.List;
@@ -21,6 +22,24 @@ public class MemberService {
         userRepository.save(member);
 
         return member.getId();
+    }
+
+    @Transactional
+    public Member update(Long memberId, Member member) {
+        Member findMember = userRepository.findById(memberId).orElseThrow(NoSearchEntityException::new);
+
+        findMember.update(member);
+
+        return findMember;
+    }
+
+    @Transactional
+    public Long delete(Long memberId) {
+        Member findMember = userRepository.findById(memberId).orElseThrow(NoSearchEntityException::new);
+
+        userRepository.deleteById(memberId);
+
+        return memberId;
     }
 
     public List<Member> findAll() {

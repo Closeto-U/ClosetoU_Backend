@@ -54,4 +54,13 @@ public class Member {
                 .member(this)
                 .build();
     }
+
+    public void update(Member member) {
+        this.password = member.getPassword();
+        this.name = member.getName();
+        this.age = member.getAge();
+        this.gender = member.getGender();
+        this.birthday = member.getBirthday();
+        this.nickname = member.getNickname();
+    }
 }
