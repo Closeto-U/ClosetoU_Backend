@@ -1,4 +1,4 @@
-package spring.project.closetoU.exception;
+package spring.project.closetoU.exception.type;
 
 public class NotUniqueEmailException extends RuntimeException{
     public NotUniqueEmailException() {

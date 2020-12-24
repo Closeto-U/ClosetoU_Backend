@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.closetoU.domain.Member;
-import spring.project.closetoU.exception.NoSearchEntityException;
+import spring.project.closetoU.exception.type.NotUniqueEmailException;
+import spring.project.closetoU.exception.type.UserNotFoundException;
 import spring.project.closetoU.repository.MemberRepository;
 
 import java.util.List;
@@ -25,32 +26,38 @@ public class MemberService {
     }
 
     @Transactional
-    public Member update(Long memberId, Member member) {
-        Member findMember = userRepository.findById(memberId).orElseThrow(NoSearchEntityException::new);
+    public void update(Long memberId, Member member) {
+        Member findMember = userRepository.findById(memberId)
+                .orElseThrow(() -> new UserNotFoundException(String.format("ID [%s] 정보를 찾을 수 없습니다.", memberId)));
 
         findMember.update(member);
-
-        return findMember;
     }
 
     @Transactional
-    public Long delete(Long memberId) {
-        Member findMember = userRepository.findById(memberId).orElseThrow(NoSearchEntityException::new);
+    public void delete(Long memberId) {
+        userRepository.findById(memberId)
+                .orElseThrow(() -> new UserNotFoundException(String.format("ID [%s] 정보를 찾을 수 없습니다.", memberId)));
+        ;
 
         userRepository.deleteById(memberId);
-
-        return memberId;
     }
 
     public List<Member> findAll() {
         return userRepository.findAll();
     }
 
-    public Optional<Member> findById(Long id) {
-        return userRepository.findById(id);
+    public Member findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(String.format("ID [%s] 정보를 찾을 수 없습니다.", id)));
     }
 
-    public Optional<Member> findUser(String email) {
-        return userRepository.findByEmail(email);
+    public Member findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(String.format("Email [%s] 정보를 찾을 수 없습니다.", email)));
+    }
+
+    public void checkExistsEmail(String email) {
+        if (userRepository.existsByEmail(email))
+            throw new NotUniqueEmailException(String.format("이미 존재하는 Email 입니다. [%s]", email));
     }
 }
