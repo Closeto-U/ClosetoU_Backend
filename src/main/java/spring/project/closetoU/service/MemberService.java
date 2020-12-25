@@ -4,12 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.closetoU.domain.Member;
-import spring.project.closetoU.exception.type.NotUniqueEmailException;
-import spring.project.closetoU.exception.type.UserNotFoundException;
+import spring.project.closetoU.advice.exception.NotUniqueEmailException;
+import spring.project.closetoU.advice.exception.UserNotFoundException;
 import spring.project.closetoU.repository.MemberRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

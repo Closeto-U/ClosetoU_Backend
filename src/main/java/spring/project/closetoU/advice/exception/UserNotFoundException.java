@@ -1,4 +1,4 @@
-package spring.project.closetoU.exception.type;
+package spring.project.closetoU.advice.exception;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException() {

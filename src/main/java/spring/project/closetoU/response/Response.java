@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Response<T> {
     private T data;
-    private int code;
+    private boolean isSuccess;
     private String msg;
 }

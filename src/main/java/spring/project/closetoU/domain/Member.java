@@ -34,6 +34,7 @@ public class Member {
 
     private LocalDate birthday;
     private String nickname;
+    private Role role;
 
     @OneToMany(mappedBy = "member")
     private List<Closet> closet = new ArrayList<>();
@@ -47,6 +48,7 @@ public class Member {
         this.gender = gender;
         this.birthday = birthday;
         this.nickname = nickname;
+        this.role = Role.USER;
     }
 
     public MemberDto toDto(){

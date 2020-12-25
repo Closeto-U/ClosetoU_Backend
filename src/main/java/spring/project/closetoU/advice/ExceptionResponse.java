@@ -1,4 +1,4 @@
-package spring.project.closetoU.exception;
+package spring.project.closetoU.advice;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

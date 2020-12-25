@@ -3,6 +3,10 @@ package spring.project.closetoU;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import spring.project.closetoU.domain.Gender;
 import spring.project.closetoU.domain.Member;
 import spring.project.closetoU.service.MemberService;
@@ -18,14 +22,21 @@ public class ClosetoUApplication {
 
     @PostConstruct
     public void addTestData() {
-        memberService.join(Member.builder().email("wonju@naver.com").password("1234")
+        memberService.join(Member.builder().email("wonju@naver.com")
+                .password(passwordEncoder().encode("1234"))
                 .name("손원주").age(27).gender(Gender.MALE)
                 .birthday(LocalDate.of(1994, 1, 21))
                 .nickname("기내식은수박바").build());
-        memberService.join(Member.builder().email("sonwonjoo@naver.com").password("1234")
+        memberService.join(Member.builder().email("sonwonjoo@naver.com")
+                .password(passwordEncoder().encode("1234"))
                 .name("손원주123242").age(44).gender(Gender.FEMALE)
                 .birthday(LocalDate.of(2020, 3, 21))
                 .nickname("바바바바바바").build());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     public static void main(String[] args) {
