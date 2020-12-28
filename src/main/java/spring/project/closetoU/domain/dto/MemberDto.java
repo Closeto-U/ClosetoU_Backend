@@ -1,8 +1,7 @@
-package spring.project.closetoU.dto;
+package spring.project.closetoU.domain.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.format.annotation.DateTimeFormat;
 import spring.project.closetoU.domain.Gender;
 import spring.project.closetoU.domain.Member;
 

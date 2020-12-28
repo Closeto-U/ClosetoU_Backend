@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.closetoU.domain.Member;
-import spring.project.closetoU.advice.exception.NotUniqueEmailException;
-import spring.project.closetoU.advice.exception.UserNotFoundException;
+import spring.project.closetoU.advice.exception.NotUniqueValueException;
+import spring.project.closetoU.advice.exception.EntityNotFoundException;
 import spring.project.closetoU.repository.MemberRepository;
 
 import java.util.List;
@@ -19,24 +19,21 @@ public class MemberService {
 
     @Transactional
     public Long join(Member member) {
-        userRepository.save(member);
+        Member savedMember = userRepository.save(member);
 
-        return member.getId();
+        return savedMember.getId();
     }
 
     @Transactional
     public void update(Long memberId, Member member) {
-        Member findMember = userRepository.findById(memberId)
-                .orElseThrow(() -> new UserNotFoundException(String.format("ID [%s] 정보를 찾을 수 없습니다.", memberId)));
+        Member findMember = findById(memberId);
 
         findMember.update(member);
     }
 
     @Transactional
     public void delete(Long memberId) {
-        userRepository.findById(memberId)
-                .orElseThrow(() -> new UserNotFoundException(String.format("ID [%s] 정보를 찾을 수 없습니다.", memberId)));
-        ;
+        findById(memberId);
 
         userRepository.deleteById(memberId);
     }
@@ -47,16 +44,16 @@ public class MemberService {
 
     public Member findById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(String.format("ID [%s] 정보를 찾을 수 없습니다.", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Member :\nID [%s] 정보를 찾을 수 없습니다.", id)));
     }
 
     public Member findByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(String.format("Email [%s] 정보를 찾을 수 없습니다.", email)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Member :\nEmail [%s] 정보를 찾을 수 없습니다.", email)));
     }
 
     public void checkExistsEmail(String email) {
         if (userRepository.existsByEmail(email))
-            throw new NotUniqueEmailException(String.format("이미 존재하는 Email 입니다. [%s]", email));
+            throw new NotUniqueValueException(String.format("Member :\n이미 존재하는 Email 입니다. [%s]", email));
     }
 }

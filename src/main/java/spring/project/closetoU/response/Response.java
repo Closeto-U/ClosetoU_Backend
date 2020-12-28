@@ -1,16 +1,21 @@
 package spring.project.closetoU.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Response<T> {
     private T data;
     private boolean isSuccess;
+    private String entityClassName;
     private String msg;
+
+    @Builder
+    public Response(T data, boolean isSuccess, String className, String msg) {
+        this.data = data;
+        this.isSuccess = isSuccess;
+        this.entityClassName = className;
+        this.msg = msg;
+    }
 }

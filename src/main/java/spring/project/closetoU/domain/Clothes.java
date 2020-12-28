@@ -3,6 +3,8 @@ package spring.project.closetoU.domain;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,7 +20,6 @@ public class Clothes {
     private String clothes_type;
     private String color;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "closet_id")
-    private Closet closet;
+    @OneToMany(mappedBy = "clothes")
+    private List<ClosetClothes> closetClothesList = new ArrayList<>();
 }

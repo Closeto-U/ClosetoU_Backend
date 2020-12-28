@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import spring.project.closetoU.dto.MemberDto;
+import spring.project.closetoU.domain.dto.MemberDto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -37,7 +37,7 @@ public class Member {
     private Role role;
 
     @OneToMany(mappedBy = "member")
-    private List<Closet> closet = new ArrayList<>();
+    private List<Closet> closetList = new ArrayList<>();
 
     @Builder
     public Member(String email, String password, String name, int age, Gender gender, LocalDate birthday, String nickname) {
@@ -55,6 +55,11 @@ public class Member {
         return MemberDto.builder()
                 .member(this)
                 .build();
+    }
+
+    public void addCloset(Closet closet) {
+        this.closetList.add(closet);
+        closet.setMember(this);
     }
 
     public void update(Member member) {
