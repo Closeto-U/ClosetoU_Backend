@@ -1,6 +1,6 @@
 package spring.project.closetoU.domain;
 
-import lombok.Getter;
+import lombok.*;
 import spring.project.closetoU.domain.dto.ClosetDto;
 
 import javax.persistence.*;
@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Closet {
 
     @Id
@@ -23,8 +24,13 @@ public class Closet {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "closet")
+    @OneToMany(mappedBy = "closet", cascade = CascadeType.ALL)
     private List<ClosetClothes> closetClothesList = new ArrayList<>();
+
+    @Builder
+    public Closet(String name) {
+        this.name = name;
+    }
 
     // 연관관계 매핑
     public void setMember(Member member) {
@@ -35,9 +41,7 @@ public class Closet {
         this.name = closet.getName();
     }
 
-    public ClosetDto toDto() {
-        return ClosetDto.builder()
-                .closet(this)
-                .build();
-    }
+//    public ClosetDto toDto() {
+//        return new ClosetDto(this);
+//    }
 }

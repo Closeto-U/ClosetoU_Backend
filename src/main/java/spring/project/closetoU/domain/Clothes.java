@@ -1,6 +1,9 @@
 package spring.project.closetoU.domain;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Clothes {
 
     @Id
@@ -20,6 +24,14 @@ public class Clothes {
     private String clothes_type;
     private String color;
 
-    @OneToMany(mappedBy = "clothes")
+    @OneToMany(mappedBy = "clothes", cascade = CascadeType.ALL)
     private List<ClosetClothes> closetClothesList = new ArrayList<>();
+
+    @Builder
+    public Clothes(String name, String brand, String clothes_type, String color) {
+        this.name = name;
+        this.brand = brand;
+        this.clothes_type = clothes_type;
+        this.color = color;
+    }
 }
