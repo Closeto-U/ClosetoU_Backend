@@ -80,13 +80,13 @@ public class MemberController {
     public ResponseEntity<Long> update(@PathVariable("id") Long memberId, @RequestBody Member member) {
         memberService.update(memberId, member);
 
-        return new ResponseEntity<>(memberId, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(memberId, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long memberId) {
         memberService.delete(memberId);
 
-        return new ResponseEntity<>(memberId, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(memberId, HttpStatus.OK);
     }
 }

@@ -6,12 +6,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.project.closetoU.domain.Closet;
+import spring.project.closetoU.domain.Clothes;
 import spring.project.closetoU.domain.dto.ClosetDto;
+import spring.project.closetoU.domain.dto.ClothesDto;
 import spring.project.closetoU.response.Response;
 import spring.project.closetoU.service.ClosetService;
 import spring.project.closetoU.service.ClothesService;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,40 +40,55 @@ public class ClosetController {
 
     @GetMapping("/{id}")
     public Response<ClosetDto> findOne(@PathVariable("id") Long closetId) {
+        Closet findCloset = closetService.findById(closetId);
+        List<ClothesDto> findClothes =
+                clothesService.findClothesByClosetId(closetId)
+                .stream()
+                .map(ClothesDto::new)
+                .collect(Collectors.toList());
+
         return Response.<ClosetDto>builder()
-                .data(closetService.findByIdWithClothes(closetId))
+                .data(new ClosetDto(findCloset, findClothes))
                 .className("Closet")
                 .isSuccess(true)
                 .msg(String.format("ID [%s] 옷장 정보 조회에 성공하였습니다.", closetId))
                 .build();
     }
 
-//    @GetMapping("/list")
-//    public Response<List<ClosetDto>> findList() {
-//        List<ClosetDto> closetDtoList = closetService.findAll()
-//                .stream()
-//                .map(closet -> (new ClosetDto(closet, closetService.findByIdWithClothes(closet.getId()))))
-//                .collect(Collectors.toList());
-//
-//        return Response.<List<ClosetDto>>builder()
-//                .data(closetDtoList)
-//                .className("Closet")
-//                .isSuccess(true)
-//                .msg("모든 옷장 조회에 성공하였습니다.")
-//                .build();
-//    }
+    @GetMapping("/list/{id}")
+    public Response<List<ClosetDto>> findClosetListPerMember(@PathVariable("id") Long memberId) {
+        List<ClosetDto> closetDtoList = new ArrayList<>();
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Long> update(@PathVariable("id") Long closetId, @RequestBody Closet closet) {
-//        closetService.update(closetId, closet);
-//
-//        return new ResponseEntity<>(closetId, HttpStatus.ACCEPTED);
-//    }
+        List<Closet> findClosets = closetService.findClosetByMemberId(memberId);
+        for (Closet findCloset : findClosets) {
+            List<ClothesDto> clothesDtoList =
+                    clothesService.findClothesByClosetId(findCloset.getId())
+                            .stream()
+                            .map(ClothesDto::new)
+                            .collect(Collectors.toList());
+
+            closetDtoList.add(new ClosetDto(findCloset, clothesDtoList));
+        }
+
+        return Response.<List<ClosetDto>>builder()
+                .data(closetDtoList)
+                .className("Closet")
+                .isSuccess(true)
+                .msg(String.format("멤버 [%s]의 모든 옷장 조회에 성공하였습니다.", memberId))
+                .build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Long> update(@PathVariable("id") Long closetId, @RequestBody Closet closet) {
+        closetService.update(closetId, closet);
+
+        return new ResponseEntity<>(closetId, HttpStatus.OK);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> delete(@PathVariable("id") Long closetId) {
         closetService.delete(closetId);
 
-        return new ResponseEntity<>(closetId, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(closetId, HttpStatus.OK);
     }
 }

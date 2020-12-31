@@ -1,5 +1,4 @@
 spring:
-
   datasource:
     url: jdbc:h2:tcp://localhost/~/closet
     username: sa

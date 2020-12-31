@@ -9,6 +9,7 @@ import spring.project.closetoU.domain.Clothes;
 import spring.project.closetoU.domain.Member;
 import spring.project.closetoU.domain.dto.ClosetDto;
 import spring.project.closetoU.domain.dto.ClothesDto;
+import spring.project.closetoU.repository.ClosetClothesRepository;
 import spring.project.closetoU.repository.ClosetRepository;
 import spring.project.closetoU.repository.ClothesRepository;
 import spring.project.closetoU.repository.MemberRepository;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 public class ClosetService {
 
     private final ClosetRepository closetRepository;
-    private final ClosetClothesService closetClothesRepository;
+    private final ClosetClothesRepository closetClothesRepository;
     private final ClothesRepository clothesRepository;
     private final MemberRepository memberRepository;
 
@@ -53,32 +54,20 @@ public class ClosetService {
         return closetRepository.findAll();
     }
 
-//    @Transactional
-//    public void update(Long closetId, Closet closet) {
-//        Closet findCloset = findById(closetId);
-//
-//        findCloset.update(closet);
-//    }
+    @Transactional
+    public void update(Long closetId, Closet closet) {
+        Closet findCloset = findById(closetId);
+
+        findCloset.update(closet);
+    }
 
     @Transactional
     public void delete(Long closetId) {
         closetRepository.deleteById(closetId);
     }
 
-    public ClosetDto findByIdWithClothes(Long closetId) {
-        Closet findCloset = findById(closetId);
-        List<Long> findCCList = closetClothesRepository.findListbyClosetId(closetId);
-        List<ClothesDto> findClothes = clothesRepository.findByIds(findCCList)
-                .stream()
-                .map(c -> (
-                        ClothesDto.builder()
-                                .name(c.getName())
-                                .brand(c.getBrand())
-                                .color(c.getColor())
-                                .clothes_type(c.getClothes_type())
-                                .build()))
-                .collect(Collectors.toList());
-
-        return new ClosetDto(findCloset, findClothes);
+    public List<Closet> findClosetByMemberId(Long memberId){
+        return closetRepository.findClosetByMemberId(memberId);
     }
+
 }

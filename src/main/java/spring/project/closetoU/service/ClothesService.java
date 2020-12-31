@@ -7,6 +7,7 @@ import spring.project.closetoU.advice.exception.EntityNotFoundException;
 import spring.project.closetoU.domain.Closet;
 import spring.project.closetoU.domain.ClosetClothes;
 import spring.project.closetoU.domain.Clothes;
+import spring.project.closetoU.domain.dto.ClothesDto;
 import spring.project.closetoU.repository.ClothesRepository;
 
 import java.util.List;
@@ -35,10 +36,6 @@ public class ClothesService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%s] 엔티티가 존재하지 않습니다.", clothesId)));
     }
 
-    public List<Clothes> findByIds(List<Long> clothesIds) {
-        return clothesRepository.findByIds(clothesIds);
-    }
-
     public List<Clothes> findAll() {
         return clothesRepository.findAll();
     }
@@ -53,5 +50,9 @@ public class ClothesService {
     @Transactional
     public void delete(Long clothesId) {
         clothesRepository.deleteById(clothesId);
+    }
+
+    public List<Clothes> findClothesByClosetId(Long closetId) {
+        return clothesRepository.findClothesByClosetId(closetId);
     }
 }
