@@ -34,9 +34,11 @@ public class Member {
 
     private LocalDate birthday;
     private String nickname;
+
+    @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Closet> closetList = new ArrayList<>();
 
     @Builder
@@ -55,6 +57,10 @@ public class Member {
         return MemberDto.builder()
                 .member(this)
                 .build();
+    }
+
+    public void setEncodePassword(String password) {
+        this.password = password;
     }
 
     public void addCloset(Closet closet) {
