@@ -1,7 +1,5 @@
 # 옷달 (옷장 달력) REST API
 
-
-
 ## `/member`
 
 <details open> <summary> Member 접기 / 펼치기 </summary>
@@ -10,7 +8,7 @@
 
 아이디와 비밀번호를 통해 인증 토큰 발급
 
-<details open> <summary> /sigin 접기 / 펼치기 </summary>
+<details open> <summary> /sigin (POST) 접기 / 펼치기 </summary>
 
 ##### Request
 
@@ -53,7 +51,7 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3b25qdUBuYXZlci5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI
 
 회원정보를 입력하여 회원가입
 
-<details open> <summary> /join 접기 / 펼치기 </summary>
+<details open> <summary> /join (POST) 접기 / 펼치기 </summary>
 
 ##### Request
 
@@ -78,20 +76,20 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3b25qdUBuYXZlci5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI
 
 | Parameter | Description        | Required |
 | --------- | ------------------ | -------- |
-| email     | 이메일               | true     |
-| password  | 비밀번호             | true     |
-| name      | 이름                | false    |
-| age       | 나이                | false    |
-| gender    | 성별 (MALE, FEMALE) | false    |
-| birthday  | 생년월일             | false    |
-| nickname  | 닉네임               | false   |
-| role      | 권한                | true     |
+| email     | 이메일               | Yes     |
+| password  | 비밀번호             | Yes     |
+| name      | 이름                | No      |
+| age       | 나이                | No      |
+| gender    | 성별 (MALE, FEMALE) | No      |
+| birthday  | 생년월일             | No      |
+| nickname  | 닉네임               | No      |
+| role      | 권한                | NO      |
 
 ##### Response
 
 | Status Code      | Description                           |
 | ---------------- | ------------------------------------- |
-| 201 Created      | 회원정보가 성공적으로 생성됨.                |
+| 201 Created      | 회원 정보가 성공적으로 생성됨.                |
 | 404 Not Found    | 요청된 자원이 존재하지 않음.                 |
 
 </details>
@@ -102,7 +100,7 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3b25qdUBuYXZlci5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI
 
 모든 회원의 정보를 조회
 
-<details open> <summary> /list 접기 / 펼치기 </summary>
+<details open> <summary> /list (GET) 접기 / 펼치기 </summary>
 
 ##### Request
 
@@ -168,6 +166,12 @@ id에 해당하는 회원 정보 한 건을 조회
 | Body              | N/A                        |
 | Method            | GET                        |
 
+##### Query Parameters
+
+| Parameter | Description               | Required |
+| --------- | ------------------------- | -------- |
+| `id`      | Member ID (PK, Not Email) | Yes      |
+
 ##### Response
 
 | Status Code      | Description                              |
@@ -220,6 +224,23 @@ id에 해당하는 회원 정보를 갱신 (이메일은 변경 불가)
 }
 </code></pre> </td></tr>
 <tr><td>Method</td><td>PUT</td></tr>
+    
+##### Body Parameter
+
+| Parameter | Description        | Required |
+| --------- | ------------------ | -------- |
+| password  | 비밀번호             | No     |
+| name      | 이름                | No      |
+| age       | 나이                | No      |
+| gender    | 성별 (MALE, FEMALE) | No      |
+| birthday  | 생년월일             | No      |
+| nickname  | 닉네임               | No      |
+    
+##### Query Parameters
+
+| Parameter | Description               | Required |
+| --------- | ------------------------- | -------- |
+| `id`      | Member ID (PK, Not Email) | Yes      |
 
 ##### Response
 
@@ -248,6 +269,12 @@ id에 해당하는 회원 정보를 삭제
 | Body              | N/A                        |
 | Method            | DELETE                     |
 
+##### Query Parameters
+
+| Parameter | Description               | Required |
+| --------- | ------------------------- | -------- |
+| `id`      | Member ID (PK, Not Email) | Yes      |
+
 ##### Response
 
 | Status Code      | Description                              |
@@ -262,10 +289,118 @@ id에 해당하는 회원 정보를 삭제
 
 </details>
 
+<br />
+<br />
 
+## `/closet`
 
+<details open> <summary> Closet 접기 / 펼치기 </summary>
 
+#### 1. `/{memberId}` (POST)
 
+옷장 정보를 입력하여 옷장 생성
 
+<details open> <summary> /{memberId} (POST) 접기 / 펼치기 </summary>
 
+##### Request
 
+<table>
+<tr><th>Request Component</th><th>Value</th></tr>
+<tr><td> Name</td><td><pre><code>/{memberId}</code></pre></td></tr>
+<tr><td>Header </td><td><pre><code>accept: application/json</code></pre> </td></tr>
+<tr><td>Body</td><td><pre><code>
+{
+    "closetName": "member1 closet1"
+}
+</code></pre> </td></tr>
+<tr><td>Method</td><td>POST</td></tr>
+
+##### Body Parameter
+
+| Parameter  | Description        | Required |
+| ---------- | ------------------ | -------- |
+| closetName | 옷장 이름            | Yes      |
+
+##### Query Parameters
+
+| Parameter | Description               | Required |
+| --------- | ------------------------- | -------- |
+| `id`      | Member ID (PK, Not Email) | Yes      |
+
+##### Response
+
+| Status Code      | Description                              |
+| ---------------- | ---------------------------------------- |
+| 201 Created      | 옷장 정보가 성공적으로 생성됨.                   |
+| 401 UnAuthorized | 해당 리소스에 접근하기 위한 권한이 없음. (토큰 필요) |
+| 404 Not Found    | 요청된 자원이 존재하지 않음.                    |
+
+</details>
+
+<br />
+
+#### 2. `/{closetId}` (GET)
+
+id에 해당하는 옷장 정보와 옷장에 들어있는 옷들 조회
+
+<details open> <summary> /{closetId} (GET) 접기 / 펼치기 </summary>
+
+##### Request
+
+| Request Component | Value                      |
+| ----------------- | -------------------------- |
+| Name              | `/{closetId}`              |
+| Header            | `accept: application/json`<br /> `X-AUTH-TOKEN: TOKEN_VALUE` |
+| Body              | N/A                        |
+| Method            | GET                        |
+
+##### Body Parameter
+
+| Parameter  | Description        | Required |
+| ---------- | ------------------ | -------- |
+| closetName | 옷장 이름            | Yes      |
+
+##### Query Parameters
+
+| Parameter | Description               | Required |
+| --------- | ------------------------- | -------- |
+| `id`      | Closet ID (PK)            | Yes      |
+
+##### Response
+
+| Status Code      | Description                              |
+| ---------------- | ---------------------------------------- |
+| 200 OK           | 옷장 정보가 성공적으로 조회됨.                   |
+| 401 UnAuthorized | 해당 리소스에 접근하기 위한 권한이 없음. (토큰 필요) |
+| 404 Not Found    | 요청된 자원이 존재하지 않음.                    |
+
+```
+{
+    "data": {
+        "closetName": "멤버1의 1번 옷장",
+        "clothesList": [
+            {
+                "name": "겨울옷",
+                "brand": "나이키",
+                "clothes_type": "상의",
+                "color": "검은색"
+            },
+            {
+                "name": "겨울옷",
+                "brand": "나이키",
+                "clothes_type": "하의",
+                "color": "빨간색"
+            }
+        ]
+    },
+    "entityClassName": "Closet",
+    "msg": "ID [1] 옷장 정보 조회에 성공하였습니다.",
+    "success": true
+}
+```
+
+</details>
+
+<br />
+
+</details>
