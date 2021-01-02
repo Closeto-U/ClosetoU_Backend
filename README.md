@@ -354,12 +354,6 @@ id에 해당하는 옷장 정보와 옷장에 들어있는 옷들 조회
 | Body              | N/A                        |
 | Method            | GET                        |
 
-##### Body Parameter
-
-| Parameter  | Description        | Required |
-| ---------- | ------------------ | -------- |
-| closetName | 옷장 이름            | Yes      |
-
 ##### Query Parameters
 
 | Parameter | Description               | Required |
@@ -395,6 +389,77 @@ id에 해당하는 옷장 정보와 옷장에 들어있는 옷들 조회
     },
     "entityClassName": "Closet",
     "msg": "ID [1] 옷장 정보 조회에 성공하였습니다.",
+    "success": true
+}
+```
+
+</details>
+
+<br />
+
+#### 3. `/list/{memberId}` (GET)
+
+id에 해당하는 회원의 모든 옷장 정보와 옷장에 들어있는 옷들 조회
+
+<details open> <summary> /list/{memberId} (GET) 접기 / 펼치기 </summary>
+
+##### Request
+
+| Request Component | Value                      |
+| ----------------- | -------------------------- |
+| Name              | `/list/{memberId}`         |
+| Header            | `accept: application/json`<br /> `X-AUTH-TOKEN: TOKEN_VALUE` |
+| Body              | N/A                        |
+| Method            | GET                        |
+
+##### Query Parameters
+
+| Parameter | Description               | Required |
+| --------- | ------------------------- | -------- |
+| `id`      | Member ID (PK, Not Email) | Yes      |
+
+##### Response
+
+| Status Code      | Description                              |
+| ---------------- | ---------------------------------------- |
+| 200 OK           | 멤버의 모든 옷장 정보가 성공적으로 조회됨.         |
+| 401 UnAuthorized | 해당 리소스에 접근하기 위한 권한이 없음. (토큰 필요) |
+| 404 Not Found    | 요청된 자원이 존재하지 않음.                    |
+
+```
+{
+    "data": [
+        {
+            "closetName": "멤버1의 1번 옷장",
+            "clothesList": [
+                {
+                    "name": "겨울옷",
+                    "brand": "나이키",
+                    "clothes_type": "상의",
+                    "color": "검은색"
+                },
+                {
+                    "name": "겨울옷",
+                    "brand": "나이키",
+                    "clothes_type": "하의",
+                    "color": "빨간색"
+                }
+            ]
+        },
+        {
+            "closetName": "멤버1의 2번 옷장",
+            "clothesList": [
+                {
+                    "name": "가을",
+                    "brand": "아디다스",
+                    "clothes_type": "츄리닝",
+                    "color": "회색"
+                }
+            ]
+        }
+    ],
+    "entityClassName": "Closet",
+    "msg": "멤버 [1]의 모든 옷장 조회에 성공하였습니다.",
     "success": true
 }
 ```
