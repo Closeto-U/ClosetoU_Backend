@@ -1,7 +1,6 @@
 package spring.project.closetoU.domain;
 
 import lombok.*;
-import spring.project.closetoU.domain.dto.ClosetDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,8 +16,8 @@ public class Closet {
     @Column(name = "closet_id")
     private Long id;
 
-    @Column(unique = true)
-    private String name;
+    @Column(unique = true, nullable = false)
+    private String closetName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -28,8 +27,8 @@ public class Closet {
     private List<ClosetClothes> closetClothesList = new ArrayList<>();
 
     @Builder
-    public Closet(String name) {
-        this.name = name;
+    public Closet(String closetName) {
+        this.closetName = closetName;
     }
 
     // 연관관계 매핑
@@ -38,7 +37,7 @@ public class Closet {
     }
 
     public void update(Closet closet) {
-        this.name = closet.getName();
+        this.closetName = closet.getClosetName();
     }
 
 //    public ClosetDto toDto() {

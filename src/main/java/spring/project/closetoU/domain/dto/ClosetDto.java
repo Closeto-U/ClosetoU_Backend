@@ -15,7 +15,7 @@ public class ClosetDto {
 
 
     public ClosetDto(Closet closet, List<ClothesDto> clothesList) {
-        this.closetName = closet.getName();
+        this.closetName = closet.getClosetName();
         this.clothesList = clothesList;
     }
 }

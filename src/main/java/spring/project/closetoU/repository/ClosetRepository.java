@@ -6,5 +6,5 @@ import spring.project.closetoU.domain.Closet;
 import java.util.Optional;
 
 public interface ClosetRepository extends JpaRepository<Closet, Long>, QuerydslClosetRepository {
-    Optional<Closet> findByName(String name);
+    Optional<Closet> findByClosetName(String name);
 }

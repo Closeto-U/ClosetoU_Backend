@@ -24,8 +24,6 @@ import java.util.stream.Collectors;
 public class ClosetService {
 
     private final ClosetRepository closetRepository;
-    private final ClosetClothesRepository closetClothesRepository;
-    private final ClothesRepository clothesRepository;
     private final MemberRepository memberRepository;
 
     @Transactional
@@ -46,7 +44,7 @@ public class ClosetService {
     }
 
     public Closet findByName(String name) {
-        return closetRepository.findByName(name)
+        return closetRepository.findByClosetName(name)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Name [%s] 엔티티가 존재하지 않습니다.", name)));
     }
 
@@ -67,6 +65,9 @@ public class ClosetService {
     }
 
     public List<Closet> findClosetByMemberId(Long memberId){
+        memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%s] 정보를 찾을 수 없습니다.", memberId)));
+
         return closetRepository.findClosetByMemberId(memberId);
     }
 

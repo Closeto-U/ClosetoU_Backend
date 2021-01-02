@@ -38,6 +38,7 @@ public class ClosetoUApplication {
                 .name("손원주").age(27).gender(Gender.MALE)
                 .birthday(LocalDate.of(1994, 1, 21))
                 .nickname("기내식은수박바").build());
+
         memberService.join(Member.builder().email("sonwonjoo@naver.com")
                 .password("4321")
                 .name("손원주123242").age(44).gender(Gender.FEMALE)
@@ -45,15 +46,15 @@ public class ClosetoUApplication {
                 .nickname("바바바바바바").build());
 
         closetService.save(1L, Closet.builder()
-                .name("멤버1의 1번 옷장")
+                .closetName("멤버1의 1번 옷장")
                 .build());
 
         closetService.save(1L, Closet.builder()
-                .name("멤버1의 2번 옷장")
+                .closetName("멤버1의 2번 옷장")
                 .build());
 
         closetService.save(2L, Closet.builder()
-                .name("멤버2의 1번 옷장")
+                .closetName("멤버2의 1번 옷장")
                 .build());
 
         clothesService.save(1L, Clothes.builder()

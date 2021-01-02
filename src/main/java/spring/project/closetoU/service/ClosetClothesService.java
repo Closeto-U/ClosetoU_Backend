@@ -14,7 +14,7 @@ public class ClosetClothesService {
 
     private final ClosetClothesRepository closetClothesRepository;
 
-    public List<Long> findListbyClosetId(Long closetId){
+    public List<Long> findClothesIdsbyClosetId(Long closetId){
         return closetClothesRepository.findclothesIdsbyClosetId(closetId);
     }
 }

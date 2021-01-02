@@ -3,12 +3,11 @@ package spring.project.closetoU.repository.impl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import spring.project.closetoU.domain.Closet;
-import spring.project.closetoU.domain.QCloset;
 import spring.project.closetoU.repository.QuerydslClosetRepository;
 
 import java.util.List;
 
-import static spring.project.closetoU.domain.QCloset.*;
+import static spring.project.closetoU.domain.QCloset.closet;
 
 @RequiredArgsConstructor
 public class QuerydslClosetRepositoryImpl implements QuerydslClosetRepository {

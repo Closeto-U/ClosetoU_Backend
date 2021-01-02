@@ -8,6 +8,8 @@ import spring.project.closetoU.domain.Closet;
 import spring.project.closetoU.domain.ClosetClothes;
 import spring.project.closetoU.domain.Clothes;
 import spring.project.closetoU.domain.dto.ClothesDto;
+import spring.project.closetoU.repository.ClosetClothesRepository;
+import spring.project.closetoU.repository.ClosetRepository;
 import spring.project.closetoU.repository.ClothesRepository;
 
 import java.util.List;
@@ -17,12 +19,14 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ClothesService {
 
-    private final ClosetService closetService;
+    private final ClosetRepository closetRepository;
     private final ClothesRepository clothesRepository;
+    private final ClosetClothesRepository closetClothesRepository;
 
     @Transactional
     public Long save(Long closetId, Clothes clothes) {
-        Closet closet = closetService.findById(closetId);
+        Closet closet = closetRepository.findById(closetId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%s] 엔티티가 존재하지 않습니다.", closetId)));;
 
         ClosetClothes cc = new ClosetClothes(closet, clothes);
 
@@ -53,6 +57,11 @@ public class ClothesService {
     }
 
     public List<Clothes> findClothesByClosetId(Long closetId) {
-        return clothesRepository.findClothesByClosetId(closetId);
+        closetRepository.findById(closetId)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%s] 엔티티가 존재하지 않습니다.", closetId)));
+
+        List<Long> findClothesIds = closetClothesRepository.findclothesIdsbyClosetId(closetId);
+
+        return clothesRepository.findClothesList(findClothesIds);
     }
 }

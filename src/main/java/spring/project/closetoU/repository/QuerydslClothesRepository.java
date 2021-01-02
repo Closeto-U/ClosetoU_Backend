@@ -5,5 +5,5 @@ import spring.project.closetoU.domain.Clothes;
 import java.util.List;
 
 public interface QuerydslClothesRepository {
-    List<Clothes> findClothesByClosetId(Long closetId);
+    List<Clothes> findClothesList(List<Long> closetId);
 }

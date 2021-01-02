@@ -17,10 +17,10 @@ public class QuerydslClothesRepositoryImpl implements QuerydslClothesRepository 
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Clothes> findClothesByClosetId(Long closetId) {
+    public List<Clothes> findClothesList(List<Long> clothesIds) {
         return queryFactory
                 .selectFrom(clothes)
-                .where(clothes.id.eq(closetId))
+                .where(clothes.id.in(clothesIds))
                 .fetch();
     }
 }

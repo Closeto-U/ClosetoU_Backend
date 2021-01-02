@@ -26,7 +26,7 @@ public class ClosetController {
     private final ClosetService closetService;
     private final ClothesService clothesService;
 
-    @PostMapping("/save/{id}")
+    @PostMapping("/{id}")
     public ResponseEntity<URI> save(@PathVariable("id") Long memberId, @RequestBody Closet closet) {
         Long savedId = closetService.save(memberId, closet);
 
@@ -60,6 +60,7 @@ public class ClosetController {
         List<ClosetDto> closetDtoList = new ArrayList<>();
 
         List<Closet> findClosets = closetService.findClosetByMemberId(memberId);
+
         for (Closet findCloset : findClosets) {
             List<ClothesDto> clothesDtoList =
                     clothesService.findClothesByClosetId(findCloset.getId())
