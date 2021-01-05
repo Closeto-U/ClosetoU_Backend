@@ -1,7 +1,6 @@
 package spring.project.closetoU.domain.dto;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import spring.project.closetoU.domain.Gender;
 import spring.project.closetoU.domain.Member;
 
@@ -10,6 +9,7 @@ import javax.persistence.Enumerated;
 import java.time.LocalDate;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberDto {
     private String email;
     private String name;

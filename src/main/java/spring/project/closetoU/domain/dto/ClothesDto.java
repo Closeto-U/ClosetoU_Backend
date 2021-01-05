@@ -1,9 +1,6 @@
 package spring.project.closetoU.domain.dto;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import spring.project.closetoU.domain.Clothes;
 
 @Getter

@@ -5,17 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.project.closetoU.advice.exception.EntityNotFoundException;
 import spring.project.closetoU.domain.Closet;
-import spring.project.closetoU.domain.Clothes;
 import spring.project.closetoU.domain.Member;
 import spring.project.closetoU.domain.dto.ClosetDto;
-import spring.project.closetoU.domain.dto.ClothesDto;
-import spring.project.closetoU.repository.ClosetClothesRepository;
 import spring.project.closetoU.repository.ClosetRepository;
-import spring.project.closetoU.repository.ClothesRepository;
 import spring.project.closetoU.repository.MemberRepository;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,11 +59,10 @@ public class ClosetService {
         closetRepository.deleteById(closetId);
     }
 
-    public List<Closet> findClosetByMemberId(Long memberId){
+    public List<Closet> findClosetListByMemberId(Long memberId){
         memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("ID [%s] 정보를 찾을 수 없습니다.", memberId)));
 
         return closetRepository.findClosetByMemberId(memberId);
     }
-
 }
