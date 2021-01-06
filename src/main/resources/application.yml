@@ -1,11 +1,24 @@
+server:
+  address: localhost
+  port: 8080
+
 spring:
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/closet
+#    username: sa
+#    password:
+#      driver-class-name: org.h2.Driver
   datasource:
-    url: jdbc:h2:tcp://localhost/~/closet
-    username: sa
-    password:
-      driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/closetDB?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 1q2w3e4r
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: true
+    show-sql: true
     hibernate:
       ddl-auto: create
     properties:
