@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import spring.project.closetoU.domain.Closet;
+import spring.project.closetoU.domain.Clothes;
 
 import java.util.List;
 

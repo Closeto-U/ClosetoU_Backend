@@ -4,13 +4,12 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import spring.project.closetoU.domain.Clothes;
-import spring.project.closetoU.domain.dto.ClosetDto;
+import spring.project.closetoU.domain.dto.CCDto;
 import spring.project.closetoU.domain.dto.ClothesDto;
 import spring.project.closetoU.repository.QuerydslClothesRepository;
 
 import java.util.List;
 
-import static spring.project.closetoU.domain.QCloset.closet;
 import static spring.project.closetoU.domain.QClosetClothes.closetClothes;
 import static spring.project.closetoU.domain.QClothes.clothes;
 
@@ -28,27 +27,28 @@ public class QuerydslClothesRepositoryImpl implements QuerydslClothesRepository 
                 .fetch();
     }
 
-    public List<ClothesDto> findClothesDtoByClosetId(Long closetId) {
+    public List<Clothes> findClothesDtoByClosetId(Long closetId) {
         return queryFactory
-                .select(
-                        Projections.constructor(
-                                ClothesDto.class,
-                                clothes
-                        )
-                ).from(closetClothes)
+                .select(clothes)
+                .from(closetClothes)
                 .join(closetClothes.clothes, clothes)
                 .where(closetClothes.closet.id.eq(closetId))
                 .fetch();
     }
 
-    public List<ClothesDto> findClothesDtoByClosetIds(List<Long> closetIds) {
+    public List<CCDto> findClothesDtoByClosetIds(List<Long> closetIds) {
         return queryFactory
                 .select(
                         Projections.constructor(
-                                ClothesDto.class,
-                                clothes
+                                CCDto.class,
+                                closetClothes.closet.id,
+                                Projections.constructor(
+                                        ClothesDto.class,
+                                        clothes
+                                )
                         )
-                ).from(closetClothes)
+                )
+                .from(closetClothes)
                 .join(closetClothes.clothes, clothes)
                 .where(closetClothes.closet.id.in(closetIds))
                 .fetch();

@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import spring.project.closetoU.domain.Closet;
+import spring.project.closetoU.domain.Clothes;
+import spring.project.closetoU.domain.dto.CCDto;
 import spring.project.closetoU.domain.dto.ClosetDto;
 import spring.project.closetoU.domain.dto.ClothesDto;
 import spring.project.closetoU.response.Response;
@@ -14,7 +16,9 @@ import spring.project.closetoU.service.ClothesService;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -40,7 +44,10 @@ public class ClosetController {
     @GetMapping("/{id}")
     public Response<ClosetDto> findOne(@PathVariable("id") Long closetId) {
         Closet findCloset = closetService.findById(closetId);
-        List<ClothesDto> clothesDtoList = clothesService.findClothesDtoByClosetId(closetId);
+        List<ClothesDto> clothesDtoList = clothesService.findClothesDtoByClosetId(closetId)
+                .stream()
+                .map(ClothesDto::new)
+                .collect(Collectors.toList());
 
         return Response.<ClosetDto>builder()
                 .data(new ClosetDto(findCloset.getClosetName(), clothesDtoList))
@@ -52,21 +59,23 @@ public class ClosetController {
 
     @GetMapping("/list/{id}")
     public Response<List<ClosetDto>> findListPerMember(@PathVariable("id") Long memberId) {
+        Map<Long, List<ClothesDto>> map = new HashMap<>();
         List<ClosetDto> closetDtoList = new ArrayList<>();
 
         List<Closet> findClosets = closetService.findClosetListByMemberId(memberId);
-//        List<Long> closetIds = findClosets.stream()
-//                .map(Closet::getId)
-//                .collect(Collectors.toList());
+        List<Long> closetIds = findClosets.stream()
+                .map(Closet::getId)
+                .collect(Collectors.toList());
 
-//        clothesService.findClothesDtoByClosetIds(closetIds);
+        List<CCDto> ccDtoList = clothesService.findClothesDtoByClosetIds(closetIds);
 
-        for (Closet findCloset : findClosets) {
-            List<ClothesDto> clothesDtoList =
-                    clothesService.findClothesDtoByClosetId(findCloset.getId());
-
-            closetDtoList.add(new ClosetDto(findCloset.getClosetName(), clothesDtoList));
+        for (CCDto ccDto : ccDtoList) {
+            map.putIfAbsent(ccDto.getClosetId(), new ArrayList<>());
+            map.get(ccDto.getClosetId()).add(ccDto.getClothesDto());
         }
+
+        for (Closet closet : findClosets)
+            closetDtoList.add(new ClosetDto(closet.getClosetName(), map.get(closet.getId())));
 
         return Response.<List<ClosetDto>>builder()
                 .data(closetDtoList)

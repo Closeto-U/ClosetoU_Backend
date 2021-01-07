@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import spring.project.closetoU.domain.dto.ClothesDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -35,14 +34,4 @@ public class Clothes {
         this.clothes_type = clothes_type;
         this.color = color;
     }
-
-    public ClothesDto toDto() {
-        return ClothesDto.builder()
-                .name(this.name)
-                .brand(this.brand)
-                .clothes_type(this.clothes_type)
-                .color(this.color)
-                .build();
-    }
-
 }

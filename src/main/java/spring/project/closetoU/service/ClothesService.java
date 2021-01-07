@@ -7,7 +7,7 @@ import spring.project.closetoU.advice.exception.EntityNotFoundException;
 import spring.project.closetoU.domain.Closet;
 import spring.project.closetoU.domain.ClosetClothes;
 import spring.project.closetoU.domain.Clothes;
-import spring.project.closetoU.domain.dto.ClothesDto;
+import spring.project.closetoU.domain.dto.CCDto;
 import spring.project.closetoU.repository.ClosetRepository;
 import spring.project.closetoU.repository.ClothesRepository;
 
@@ -54,11 +54,11 @@ public class ClothesService {
         clothesRepository.deleteById(clothesId);
     }
 
-    public List<ClothesDto> findClothesDtoByClosetId(Long closetId) {
+    public List<Clothes> findClothesDtoByClosetId(Long closetId) {
         return clothesRepository.findClothesDtoByClosetId(closetId);
     }
 
-    public List<ClothesDto> findClothesDtoByClosetIds(List<Long> closetIds) {
+    public List<CCDto> findClothesDtoByClosetIds(List<Long> closetIds) {
         return clothesRepository.findClothesDtoByClosetIds(closetIds);
     }
 }
