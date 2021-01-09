@@ -34,7 +34,7 @@ public class MemberController {
         if (!passwordEncoder.matches(member.get("password"), findMember.getPassword()))
             throw new PasswordFailedException("패스워드가 틀렸습니다.");
 
-        return new ResponseEntity<>(jwtTokenProvider.createToken(findMember.getEmail(), findMember.getRole().toString()), HttpStatus.OK);
+        return new ResponseEntity<>(jwtTokenProvider.createToken(findMember.getEmail()), HttpStatus.OK);
     }
 
     @PostMapping("/join")

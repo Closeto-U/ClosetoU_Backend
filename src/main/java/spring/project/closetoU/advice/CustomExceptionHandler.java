@@ -33,22 +33,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = AuthenticationEntryPointException.class)
+    @ExceptionHandler(value = {AuthenticationEntryPointException.class, PasswordFailedException.class, AccessDeniedException.class})
     public final ResponseEntity<Object> handleAuthenticationEntryPointExceptionException(Exception e, WebRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), e.getMessage(), request.getDescription(false));
-
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
-    }
-
-    @ExceptionHandler(value = PasswordFailedException.class)
-    public final ResponseEntity<Object> handlePasswordFailedExceptionException(Exception e, WebRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), e.getMessage(), request.getDescription(false));
-
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
-    }
-
-    @ExceptionHandler(value = AccessDeniedException.class)
-    public final ResponseEntity<Object> handleAccessDeniedExceptionException(Exception e, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), e.getMessage(), request.getDescription(false));
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
