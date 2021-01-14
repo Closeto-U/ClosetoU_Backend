@@ -107,7 +107,7 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3b25qdUBuYXZlci5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI
 | Request Component | Value                      |
 | ----------------- | -------------------------- |
 | Name              | `/list`                    |
-| Header            | `accept: application/json`<br /> `X-AUTH-TOKEN: TOKEN_VALUE` |
+| Header            | `accept: application/json`<br /> `Bearer Token: TOKEN_VALUE` |
 | Body              | N/A                        |
 | Method            | GET                        |
 
@@ -162,7 +162,7 @@ id에 해당하는 회원 정보 한 건을 조회
 | Request Component | Value                      |
 | ----------------- | -------------------------- |
 | Name              | `/{id}`                    |
-| Header            | `accept: application/json`<br /> `X-AUTH-TOKEN: TOKEN_VALUE` |
+| Header            | `accept: application/json`<br /> `Bearer Token: TOKEN_VALUE` |
 | Body              | N/A                        |
 | Method            | GET                        |
 
@@ -212,7 +212,7 @@ id에 해당하는 회원 정보를 갱신 (이메일은 변경 불가)
 <table>
 <tr><th>Request Component</th><th>Value</th></tr>
 <tr><td> Name</td><td><pre><code>/join</code></pre></td></tr>
-<tr><td>Header </td><td><pre><code>accept: application/json</code><br /><code>X-AUTH-TOKEN: TOKEN_VALUE</code></pre> </td></tr>
+<tr><td>Header </td><td><pre><code>accept: application/json</code><br /><code>Bearer Token: TOKEN_VALUE</code></pre> </td></tr>
 <tr><td>Body</td><td><pre><code>
 {
     "password": "dwnnsjdxdf",
@@ -229,11 +229,11 @@ id에 해당하는 회원 정보를 갱신 (이메일은 변경 불가)
 
 | Parameter | Description        | Required |
 | --------- | ------------------ | -------- |
-| password  | 비밀번호             | No     |
-| name      | 이름                | No      |
-| age       | 나이                | No      |
-| gender    | 성별 (MALE, FEMALE) | No      |
-| birthday  | 생년월일             | No      |
+| password  | 비밀번호             | No       |
+| name      | 이름                | No       |
+| age       | 나이                | No       |
+| gender    | 성별 (MALE, FEMALE) | No       |
+| birthday  | 생년월일             | No       |
 | nickname  | 닉네임               | No      |
     
 ##### Query Parameters
@@ -265,7 +265,7 @@ id에 해당하는 회원 정보를 삭제
 | Request Component | Value                      |
 | ----------------- | -------------------------- |
 | Name              | `/list`                    |
-| Header            | `accept: application/json`<br /> `X-AUTH-TOKEN: TOKEN_VALUE` |
+| Header            | `accept: application/json`<br /> `Bearer Token: TOKEN_VALUE` |
 | Body              | N/A                        |
 | Method            | DELETE                     |
 
@@ -277,11 +277,11 @@ id에 해당하는 회원 정보를 삭제
 
 ##### Response
 
-| Status Code      | Description                              |
-| ---------------- | ---------------------------------------- |
-| 200 OK           | 회원 정보를 성공적으로 삭제함.                   |
-| 401 UnAuthorized | 해당 리소스에 접근하기 위한 권한이 없음. (토큰 필요) |
-| 404 Not Found    | 요청된 자원이 존재하지 않음.                    |
+| Status Code      | Description                               |
+| ---------------- | ----------------------------------------- |
+| 204 No Content   | 회원 정보를 성공적으로 삭제함. (옷장, 옷도 같이 삭제) |
+| 401 UnAuthorized | 해당 리소스에 접근하기 위한 권한이 없음. (토큰 필요)  |
+| 404 Not Found    | 요청된 자원이 존재하지 않음.                     |
 
 </details>
 
@@ -307,7 +307,7 @@ id에 해당하는 회원 정보를 삭제
 <table>
 <tr><th>Request Component</th><th>Value</th></tr>
 <tr><td> Name</td><td><pre><code>/{memberId}</code></pre></td></tr>
-<tr><td>Header </td><td><pre><code>accept: application/json</code></pre> </td></tr>
+<tr><td>Header </td><td><pre><code>accept: application/json</code><br /><code>Bearer Token: TOKEN_VALUE</code></pre> </td></tr>
 <tr><td>Body</td><td><pre><code>
 {
     "closetName": "member1 closet1"
@@ -350,7 +350,7 @@ id에 해당하는 옷장 정보와 옷장에 들어있는 옷들 조회
 | Request Component | Value                      |
 | ----------------- | -------------------------- |
 | Name              | `/{closetId}`              |
-| Header            | `accept: application/json`<br /> `X-AUTH-TOKEN: TOKEN_VALUE` |
+| Header            | `accept: application/json`<br /> `Bearer Token: TOKEN_VALUE` |
 | Body              | N/A                        |
 | Method            | GET                        |
 
@@ -408,7 +408,7 @@ id에 해당하는 회원의 모든 옷장 정보와 옷장에 들어있는 옷�
 | Request Component | Value                      |
 | ----------------- | -------------------------- |
 | Name              | `/list/{memberId}`         |
-| Header            | `accept: application/json`<br /> `X-AUTH-TOKEN: TOKEN_VALUE` |
+| Header            | `accept: application/json`<br /> `Bearer Token: TOKEN_VALUE` |
 | Body              | N/A                        |
 | Method            | GET                        |
 
@@ -468,4 +468,183 @@ id에 해당하는 회원의 모든 옷장 정보와 옷장에 들어있는 옷�
 
 <br />
 
+#### 4. `/{closetId}` (DELETE)
+
+id에 해당하는 옷장 정보를 삭제
+
+<details open> <summary> /{closetId} (DELETE) 접기 / 펼치기 </summary>
+
+##### Request
+
+| Request Component | Value                      |
+| ----------------- | -------------------------- |
+| Name              | `/{closetId}`              |
+| Header            | `accept: application/json`<br /> `Bearer Token: TOKEN_VALUE` |
+| Body              | N/A                        |
+| Method            | DELETE                     |
+
+##### Query Parameters
+
+| Parameter  | Description               | Required |
+| ---------- | ------------------------- | -------- |
+| `closetId` | Closet ID (PK)            | Yes      |
+
+##### Response
+
+| Status Code      | Description                              |
+| ---------------- | ---------------------------------------- |
+| 204 No Content   | 옷장 정보를 성공적으로 삭제함. (옷도 같이 삭제)     |
+| 401 UnAuthorized | 해당 리소스에 접근하기 위한 권한이 없음. (토큰 필요) |
+| 404 Not Found    | 요청된 자원이 존재하지 않음.                    |
+
 </details>
+
+<br />
+
+</details>
+
+<br />
+<br />
+
+## `/clothes`
+
+<details open> <summary> Clothes 접기 / 펼치기 </summary>
+
+#### 1. `/{clothesId}` (GET)
+
+id에 해당하는 옷 정보 한 건을 조회
+
+<details open> <summary> /{clothesId} (GET) 접기 / 펼치기 </summary>
+
+##### Request
+
+| Request Component | Value                      |
+| ----------------- | -------------------------- |
+| Name              | `/{clothesId}`             |
+| Header            | `accept: application/json`<br /> `Bearer Token: TOKEN_VALUE` |
+| Body              | N/A                        |
+| Method            | GET                        |
+
+##### Query Parameters
+
+| Parameter   | Description               | Required |
+| ----------- | ------------------------- | -------- |
+| `clothesId` | Clothes ID (PK)           | Yes      |
+
+##### Response
+
+| Status Code      | Description                              |
+| ---------------- | ---------------------------------------- |
+| 200 OK           | 옷 정보를 성공적으로 조회함.                    |
+| 401 UnAuthorized | 해당 리소스에 접근하기 위한 권한이 없음. (토큰 필요) |
+| 404 Not Found    | 요청된 자원이 존재하지 않음.                    |
+
+```
+{
+    "data": {
+        "id": 1,
+        "name": "겨울옷",
+        "brand": "나이키",
+        "clothes_type": "상의",
+        "color": "검은색"
+    },
+    "entityClassName": "Clothes",
+    "msg": "ID [1] 옷 조회에 성공하였습니다.",
+    "success": true
+}
+```
+
+</details>
+
+<br />
+
+#### 2. `/list` (GET)
+
+모든 옷 정보 조회
+
+<details open> <summary> /list (GET) 접기 / 펼치기 </summary>
+
+##### Request
+
+| Request Component | Value                      |
+| ----------------- | -------------------------- |
+| Name              | `/list`                    |
+| Header            | `accept: application/json`<br /> `Bearer Token: TOKEN_VALUE` |
+| Body              | N/A                        |
+| Method            | GET                        |
+
+##### Response
+
+| Status Code      | Description                              |
+| ---------------- | ---------------------------------------- |
+| 200 OK           | 옷 정보를 성공적으로 조회함.                    |
+| 401 UnAuthorized | 해당 리소스에 접근하기 위한 권한이 없음. (토큰 필요) |
+| 404 Not Found    | 요청된 자원이 존재하지 않음.                    |
+
+```
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "겨울옷",
+            "brand": "나이키",
+            "clothes_type": "상의",
+            "color": "검은색"
+        },
+        {
+            "id": 2,
+            "name": "겨울옷",
+            "brand": "나이키",
+            "clothes_type": "하의",
+            "color": "빨간색"
+        },
+        {
+            "id": 3,
+            "name": "가을",
+            "brand": "아디다스",
+            "clothes_type": "츄리닝",
+            "color": "회색"
+        }
+    ],
+    "entityClassName": "Clothes",
+    "msg": "모든 옷 조회에 성공하였습니다.",
+    "success": true
+}
+```
+
+</details>
+
+<br />
+
+#### 3. `/{clothesId}` (DELETE)
+
+id에 해당하는 옷 정보 삭제
+
+<details open> <summary> /{clothesId} (DELETE) 접기 / 펼치기 </summary>
+
+##### Request
+
+| Request Component | Value                      |
+| ----------------- | -------------------------- |
+| Name              | `/{clothesId}`             |
+| Header            | `accept: application/json`<br /> `Bearer Token: TOKEN_VALUE` |
+| Body              | N/A                        |
+| Method            | GET                        |
+
+##### Query Parameters
+
+| Parameter   | Description               | Required |
+| ----------- | ------------------------- | -------- |
+| `clothesId` | Clothes ID (PK)           | Yes      |
+
+##### Response
+
+| Status Code      | Description                              |
+| ---------------- | ---------------------------------------- |
+| 204 No Content   | 옷 정보를 성공적으로 삭제함.                    |
+| 401 UnAuthorized | 해당 리소스에 접근하기 위한 권한이 없음. (토큰 필요) |
+| 404 Not Found    | 요청된 자원이 존재하지 않음.                    |
+
+</details>
+
+<br />
