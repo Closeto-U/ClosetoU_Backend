@@ -1,6 +1,7 @@
 package spring.project.closetoU.domain.dto;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import spring.project.closetoU.domain.Clothes;
@@ -22,6 +23,7 @@ public class ClothesDto {
         this.color = color;
     }
 
+    @Builder
     public ClothesDto(Clothes clothes) {
         this.id = clothes.getId();
         this.name = clothes.getName();

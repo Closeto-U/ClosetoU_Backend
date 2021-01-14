@@ -42,13 +42,6 @@ public class ClothesService {
         return clothesRepository.findAll();
     }
 
-//    @Transactional
-//    public void update(Long clothesId, Clothes clothes) {
-//        Clothes findClothes = findById(clothesId);
-//
-//        findClothes.update(clothes);
-//    }
-
     @Transactional
     public void delete(Long clothesId) {
         clothesRepository.deleteById(clothesId);

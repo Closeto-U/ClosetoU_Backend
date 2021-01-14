@@ -76,7 +76,7 @@ public class MemberController {
                 .build();
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Long> update(@PathVariable("id") Long memberId, @RequestBody Member member) {
         memberService.update(memberId, member);
 
@@ -87,6 +87,6 @@ public class MemberController {
     public ResponseEntity<Long> delete(@PathVariable("id") Long memberId) {
         memberService.delete(memberId);
 
-        return new ResponseEntity<>(memberId, HttpStatus.OK);
+        return new ResponseEntity<>(memberId, HttpStatus.NO_CONTENT);
     }
 }
