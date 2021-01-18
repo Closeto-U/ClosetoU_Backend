@@ -47,7 +47,44 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3b25qdUBuYXZlci5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI
 
 <br />
 
-#### 2. `/join` (POST)
+#### 2. `/email` (POST)
+
+중복된 이메일인지 확인
+
+<details open> <summary> /email (POST) 접기 / 펼치기 </summary>
+    
+##### Request
+
+<table>
+<tr><th>Request Component</th><th>Value</th></tr>
+<tr><td> Name</td><td><pre><code>/email</code></pre></td></tr>
+<tr><td>Header </td><td><pre><code>accept: application/json</code></pre> </td></tr>
+<tr><td>Body</td><td><pre><code>
+{
+    "email": "swj@gmail.com"
+}
+</code></pre> </td></tr>
+<tr><td>Method</td><td>POST</td></tr>
+
+##### Body Parameter
+
+| Parameter | Description        | Required |
+| --------- | ------------------ | -------- |
+| email     | 이메일               | Yes     |
+
+##### Response
+
+| Status Code      | Description              |
+| ---------------- | ------------------------ |
+| 204 No Content   | 중복되지 않은 이메일임.       |
+| 400 Bad Request  | 중복된 이메일임.            |
+| 404 Not Found    | 요청된 자원이 존재하지 않음.   |
+
+</details>
+
+<br />
+
+#### 3. `/join` (POST)
 
 회원정보를 입력하여 회원가입
 
@@ -96,7 +133,7 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3b25qdUBuYXZlci5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI
 
 <br />
 
-#### 3. `/list` (GET)
+#### 4. `/list` (GET)
 
 모든 회원의 정보를 조회
 
@@ -151,7 +188,7 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3b25qdUBuYXZlci5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI
 
 <br />
 
-#### 4. `/{id}` (GET)
+#### 5. `/{id}` (GET)
 
 id에 해당하는 회원 정보 한 건을 조회
 
@@ -201,7 +238,7 @@ id에 해당하는 회원 정보 한 건을 조회
 
 <br />
 
-#### 5. `/{id}` (PUT)
+#### 6. `/{id}` (PUT)
 
 id에 해당하는 회원 정보를 갱신 (이메일은 변경 불가)
 
@@ -215,7 +252,6 @@ id에 해당하는 회원 정보를 갱신 (이메일은 변경 불가)
 <tr><td>Header </td><td><pre><code>accept: application/json</code><br /><code>Bearer Token: TOKEN_VALUE</code></pre> </td></tr>
 <tr><td>Body</td><td><pre><code>
 {
-    "password": "dwnnsjdxdf",
     "name": "Son",
     "age": "22",
     "gender": "MALE",
@@ -229,7 +265,6 @@ id에 해당하는 회원 정보를 갱신 (이메일은 변경 불가)
 
 | Parameter | Description        | Required |
 | --------- | ------------------ | -------- |
-| password  | 비밀번호             | No       |
 | name      | 이름                | No       |
 | age       | 나이                | No       |
 | gender    | 성별 (MALE, FEMALE) | No       |
@@ -254,7 +289,50 @@ id에 해당하는 회원 정보를 갱신 (이메일은 변경 불가)
 
 <br />
 
-#### 5. `/{id}` (DELETE)
+#### 7. `/{id}` (PATCH)
+
+id에 해당하는 회원 비밀번호를 갱신
+
+<details open> <summary> /{id} (PATCH) 접기 / 펼치기 </summary>
+
+##### Request
+
+<table>
+<tr><th>Request Component</th><th>Value</th></tr>
+<tr><td> Name</td><td><pre><code>/{id}</code></pre></td></tr>
+<tr><td>Header </td><td><pre><code>accept: application/json</code><br /><code>Bearer Token: TOKEN_VALUE</code></pre> </td></tr>
+<tr><td>Body</td><td><pre><code>
+{
+    "password": "dwnnsjdxdf"
+}
+</code></pre> </td></tr>
+<tr><td>Method</td><td>PATCH</td></tr>
+    
+##### Body Parameter
+
+| Parameter | Description        | Required |
+| --------- | ------------------ | -------- |
+| password  | 비밀번호             | Yes      |
+    
+##### Query Parameters
+
+| Parameter | Description               | Required |
+| --------- | ------------------------- | -------- |
+| `id`      | Member ID (PK, Not Email) | Yes      |
+
+##### Response
+
+| Status Code      | Description                              |
+| ---------------- | ---------------------------------------- |
+| 200 OK           | 회원 정보를 성공적으로 갱신함.                   |
+| 401 UnAuthorized | 해당 리소스에 접근하기 위한 권한이 없음. (토큰 필요) |
+| 404 Not Found    | 요청된 자원이 존재하지 않음.                    |
+
+</details>
+
+<br />
+
+#### 8. `/{id}` (DELETE)
 
 id에 해당하는 회원 정보를 삭제
 
