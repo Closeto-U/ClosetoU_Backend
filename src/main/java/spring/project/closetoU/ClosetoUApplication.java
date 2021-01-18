@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import spring.project.closetoU.domain.Closet;
 import spring.project.closetoU.domain.Clothes;
 import spring.project.closetoU.domain.Gender;
@@ -77,11 +75,6 @@ public class ClosetoUApplication {
                 .color("회색")
                 .clothes_type("츄리닝")
                 .build());
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Bean

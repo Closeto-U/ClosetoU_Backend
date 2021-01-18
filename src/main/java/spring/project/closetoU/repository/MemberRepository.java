@@ -6,7 +6,6 @@ import spring.project.closetoU.domain.Member;
 
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslMemberRepository {
     Optional<Member> findByEmail(String email);
-    boolean existsByEmail(String email);
 }

@@ -16,12 +16,10 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MemberService {
 
-    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
     @Transactional
     public Long join(Member member) {
-        member.setEncodePassword(passwordEncoder.encode(member.getPassword()));
         Member savedMember = memberRepository.save(member);
 
         return savedMember.getId();
@@ -29,10 +27,13 @@ public class MemberService {
 
     @Transactional
     public void update(Long memberId, Member member) {
-        member.setEncodePassword(passwordEncoder.encode(member.getPassword()));
         Member findMember = findById(memberId);
-
         findMember.update(member);
+    }
+
+    @Transactional
+    public void updatePassword(Long memberId, String password) {
+        memberRepository.updatePassword(memberId, password);
     }
 
     @Transactional
@@ -57,7 +58,7 @@ public class MemberService {
     }
 
     public void checkExistsEmail(String email) {
-        if (memberRepository.existsByEmail(email))
+        if (memberRepository.existsByEmail(email) == 1)
             throw new NotUniqueValueException(String.format("이미 존재하는 Email 입니다. [%s]", email));
     }
 }

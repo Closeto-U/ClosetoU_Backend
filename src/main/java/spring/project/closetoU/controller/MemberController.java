@@ -37,9 +37,16 @@ public class MemberController {
         return new ResponseEntity<>(jwtTokenProvider.createToken(findMember.getEmail()), HttpStatus.OK);
     }
 
+    @PostMapping("/email")
+    public ResponseEntity<Boolean> check(@RequestBody Map<String, String> stringMap){
+        memberService.checkExistsEmail(stringMap.get("email"));
+
+        return new ResponseEntity<>(true, HttpStatus.NO_CONTENT);
+    }
+
     @PostMapping("/join")
     public ResponseEntity<URI> join(@RequestBody Member member) {
-        memberService.checkExistsEmail(member.getEmail());
+        member.setEncodePassword(passwordEncoder.encode(member.getPassword()));
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -76,9 +83,16 @@ public class MemberController {
                 .build();
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Long> update(@PathVariable("id") Long memberId, @RequestBody Member member) {
         memberService.update(memberId, member);
+
+        return new ResponseEntity<>(memberId, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Long> updatePassword(@PathVariable("id") Long memberId, @RequestBody String password) {
+        memberService.updatePassword(memberId, passwordEncoder.encode(password));
 
         return new ResponseEntity<>(memberId, HttpStatus.OK);
     }
