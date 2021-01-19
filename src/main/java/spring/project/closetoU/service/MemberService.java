@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import spring.project.closetoU.domain.Member;
 import spring.project.closetoU.advice.exception.NotUniqueValueException;
 import spring.project.closetoU.advice.exception.EntityNotFoundException;
+import spring.project.closetoU.repository.ClosetRepository;
+import spring.project.closetoU.repository.ClothesRepository;
 import spring.project.closetoU.repository.MemberRepository;
 
 import java.util.List;

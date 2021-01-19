@@ -8,6 +8,7 @@ import spring.project.closetoU.domain.Closet;
 import spring.project.closetoU.domain.Member;
 import spring.project.closetoU.domain.dto.ClosetDto;
 import spring.project.closetoU.repository.ClosetRepository;
+import spring.project.closetoU.repository.ClothesRepository;
 import spring.project.closetoU.repository.MemberRepository;
 
 import java.util.List;

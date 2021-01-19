@@ -19,15 +19,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(value = EntityNotFoundException.class)
+    @ExceptionHandler(value = {EntityNotFoundException.class, NotUniqueValueException.class})
     public final ResponseEntity<Object> handleUserNotFoundException(Exception e, WebRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), e.getMessage(), request.getDescription(false));
-
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(value = NotUniqueValueException.class)
-    public final ResponseEntity<Object> handleNotUniqueEmailException(Exception e, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), e.getMessage(), request.getDescription(false));
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);

@@ -21,4 +21,13 @@ public class QuerydslClosetRepositoryImpl implements QuerydslClosetRepository {
                 .where(closet.member.id.eq(memberId))
                 .fetch();
     }
+
+    @Override
+    public List<Long> findClosetIdsByMemberId(Long memberId) {
+        return queryFactory
+                .select(closet.id)
+                .from(closet)
+                .where(closet.member.id.eq(memberId))
+                .fetch();
+    }
 }

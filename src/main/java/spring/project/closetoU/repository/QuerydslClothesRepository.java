@@ -6,8 +6,6 @@ import spring.project.closetoU.domain.dto.CCDto;
 import java.util.List;
 
 public interface QuerydslClothesRepository {
-    List<Clothes> findClothesList(List<Long> closetId);
-
     List<Clothes> findClothesDtoByClosetId(Long closetId);
 
     List<CCDto> findClothesDtoByClosetIds(List<Long> closetIds);

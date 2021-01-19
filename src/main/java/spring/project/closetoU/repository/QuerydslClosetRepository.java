@@ -8,4 +8,5 @@ import java.util.List;
 public interface QuerydslClosetRepository {
     List<Closet> findClosetByMemberId(Long memberId);
 
+    List<Long> findClosetIdsByMemberId(Long memberId);
 }
