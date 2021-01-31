@@ -27,6 +27,11 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return new ResponseEntity<>("Dong gyu OK", HttpStatus.OK);
+    }
+
     @PostMapping("/signin")
     public ResponseEntity<String> signin(@RequestBody Map<String, String> member) {
         Member findMember = memberService.findByEmail(member.get("email"));
