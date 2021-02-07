@@ -1,30 +1,51 @@
-server:
-  address: localhost
-  port: 8080
+#server:
+#  address: localhost
+#  port: 8080
 
 spring:
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/closet
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
 
+# h2
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/closet
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+
+# AWS Maria DB
+  datasource:
+#    url : jdbc:mariadb://rds엔드포인트:포트명/database이름
+    url :
+    username :
+    password :
+    driver-class-name: org.mariadb.jdbc.Driver
+    show-sql: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      dialect: org.hibernate.dialect.MariaDBDialect
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+
+# MySQL
 #  datasource:
 #    url: jdbc:mysql://localhost:3306/closetDB?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
 #    username: root
 #    password: 1q2w3e4r
 #    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
+#
+#  jpa:
 #    database: mysql
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 #    generate-ddl: true
 #    show-sql: true
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
+#    hibernate:
+#      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        format_sql: true
 
   data:
     web:
