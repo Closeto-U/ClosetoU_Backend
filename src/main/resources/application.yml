@@ -14,9 +14,9 @@ spring:
 # AWS Maria DB
   datasource:
 #    url : jdbc:mariadb://rds엔드포인트:포트명/database이름
-    url :
-    username :
-    password :
+    url : jdbc:mariadb://rds.cqowscpzvr9f.ap-northeast-2.rds.amazonaws.com:3306/ClosetoU
+    username : wonju
+    password : 12345678
     driver-class-name: org.mariadb.jdbc.Driver
     show-sql: true
 
@@ -27,6 +27,7 @@ spring:
       ddl-auto: none
     properties:
       hibernate:
+        use_sql_comments: true
         format_sql: true
 
 # MySQL
